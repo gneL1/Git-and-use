@@ -169,3 +169,46 @@ git log f2b2f069c41aded5c9f69ee33d53879513782e34
 ```git
 git log -1
 ```
+
+***
+
+## 分支的用法
+为什么需要分支？  
+&emsp;&emsp;比如现在开发一张ZE地图，整了个```v1```版本的地图发布出去了，然后现在我开始做```v2```版本的新关卡。新关卡整到一半，有玩家跟我反馈```v1```版本有个重大bug会导致游戏崩溃，要我赶紧修复。如果我现在没有使用分支功能，而是直接在主干线上开发的地图，想要修完bug后就直接拿去玩，那意味着这整到一半的新关卡也被同时发布了。  
+&emsp;&emsp;而使用了分支功能，我只需要在发布```v1```版本的时候建立一个分支，然后在主干线上继续开发```v2```版本的新关卡，当```v1```版本出现bug，就在分支线上进行修改，然后发布新的```v1_1```版本，并将修改后的代码合并到主干线上的```v2```版本。这样就解决了```v1```版本存在的bug，而且保证了主干线上的地图也已经修复了这些bug，当```v2```版本发布时，就不会有同样的bug存在了。  
+&emsp;&emsp;  
+* 查看当前版本库有哪些分支：  
+```git
+git branch
+```
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/pro/git_branch_1.PNG)  
+
+* 创建一个分支：  
+```git
+git branch version1.0
+```
+使用```git branch```检查一下：  
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/pro/git_branch_2.PNG)  
+&emsp;&emsp;```master```分支的前面有一个```*```号，说明目前的代码还是在```master```分支上。  
+
+* 切换分支：  
+```git
+git checkout version1.0
+```
+使用```git branch```检查一下  
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/pro/git_branch_3.PNG)  
+&emsp;&emsp;需要注意，在```version1.0```分支上修改并提交的代码将不会影响到```master```分支。同理，在```master```分支上修改并提交的代码也不会影响```version1.0```分支。如果在```version1.0```分支上修复了一个 **bug** ，在```master```分支上这个 **bug** 仍然是存在的。  
+
+* 合并分支：  
+```git
+git checkout master
+git merge version1.0
+```
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/pro/git_merge_1.PNG)  
+&emsp;&emsp;先切换到```master```分支，然后通过```merge```命令，把在```version1.0```分支上修改并提交的内容合并到```master```分支上。合并分支的时候可能会出现代码冲突的情况。  
+
+* 删除分支：  
+```git
+gir branch -d version1.0
+```
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/pro/git_delete_1.PNG)
