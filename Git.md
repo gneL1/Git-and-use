@@ -22,4 +22,5 @@ git init
 
 &emsp;&emsp;仓库创建完成后，会在```MaterialDesign```项目的根目录下生成一个隐藏的git目录，这个目录就是用来记录本地所有的Git操作的，可以通过```ls -al```命令查看。  
 ![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/Init/git_4.PNG)
+
 如果想删除本地仓库，只需要删除这个目录就行了。
