@@ -267,3 +267,6 @@ git merge origin/master
 git pull origin master
 ```
 ![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/pro/git_pull_1.PNG)  
+&emsp;&emsp;  
+* 实际工作情况中的提交代码：  
+&emsp;&emsp;先```commit```然后```pull```再```push```。```pull```是为了拉取到远程版本库中的最新代码，不然直接```push```很可能会与别人的代码产生冲突。如果有问题就可以自己在本地直接解决。  
