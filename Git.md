@@ -51,3 +51,121 @@ git add .
 git commit -m "First commit"
 ```
 &emsp;&emsp;注意，在```commit```命令的后面，一定要通过```-m```参数加上提交的描述信息，没有描述信息的提交被认为是不合法的。  
+
+***
+
+## 忽略文件
+&emsp;&emsp;先cd到```MultiMediaTest```项目下，```git init```创建代码仓库。  
+&emsp;&emsp;```build```目录下的文件都是编译项目时自动生成的，不应该将这部分文件添加到版本控制中。  
+&emsp;&emsp;**Git** 允许用户将指定的文件或目录排除在版本控制之外，它会检查代码仓库的目录下是否存在一个名为```.gitignore```的文件。如果存在，就去一行行读取这个文件中的内容，并把每一行指定的文件或目录排除在版本控制之外。注意，```.gitignore```中指定的文件或目录是可以使用```*```通配符的。  
+&emsp;&emsp;**Android Studio** 在创建项目的时候会自动创建出两个```.gitignore```文件，一个在根目录下面，一个在```app```模块下面。  
+
+* 根目录下的```.gitignore```:  
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/mid/gitignore_1.PNG)  
+&emsp;&emsp;除了```*.iml```表示指定任意以```.iml```结尾的文件，其他都是指定的具体的文件名或者目录名，上面配置中的所有内容都不会被添加到版本控制中，因为基本是一些由 **IDE** 自动生成的配置。  
+
+* ```app```模块下面的```.gitignore```：  
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/mid/gitignore_2.PNG)  
+&emsp;&emsp;```app```模块下大多是编写的代码，因此默认情况下只有其中的```build```目录不会被添加到版本控制中。  
+&emsp;&emsp;  
+&emsp;&emsp;也可以对以上两个文件进行任意修改。比如说```app```模块下的所有测试文件都只是给自己使用的，并不想把它们添加到版本控制中，就可以修改```app/.gitignore```文件中的内容：  
+```
+/build
+/src/test
+/src/androidTest
+```
+&emsp;&emsp;所有测试文件都是放在这两个目录下的。  
+&emsp;&emsp;  
+先```add```将所有文件添加：  
+```git
+git add .
+```
+执行```commit```命令完成提交：  
+```git
+gir commit -m "First commit."
+```
+
+***
+
+## 查看修改内容
+* 使用 **Git** 查看自上次提交后文件修改的内容：  
+```git
+git status
+```
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/mid/git_status_1.PNG)  
+&emsp;&emsp;这里 **Git** 提示目前项目中没有任何可提交的文件，因为刚刚才提交过。  
+&emsp;&emsp;  
+修改下```MainActivity```中的内容：  
+```kotlin
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        ......
+        Btn_notification.setOnClickListener {
+            ......
+            Log.d("MainActivity","跳转成功")
+        }
+        ......
+```
+这里在按钮的点击事件中添加一行日志打印代码。  
+&emsp;&emsp;  
+&emsp;&emsp;重新输入```git status```命令：  
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/mid/git_status_2.PNG)  
+&emsp;&emsp;**Git** 提醒```MainActivity.kt```这个文件已经发生了更改。  
+
+* 查看更改的内容：  
+```git
+git diff
+```
+&emsp;&emsp;这样可以查看所有文件的更改内容。如果只想查看```MainActivity.kt```这个文件的更改内容，可以在后面加上完整的文件路径：  
+```git
+git diff app/src/main/java/com/example/multimediatest/MainActivity.kt
+```
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/mid/git_diff_1.PNG)  
+&emsp;&emsp;变更部分最左侧的加号代表新添加的内容。如果有删除内容的话，会在左侧用减号表示。  
+
+***
+
+## 撤销未提交的修改
+* 撤销未使用```git add```缓存的代码  
+上面一节给```MainActivity```添加了一行日志打印，如果想要撤销这个修改，可以使用```checkout```命令：  
+```git
+git checkout app/src/main/java/com/example/multimediatest/MainActivity.kt
+```
+&emsp;&emsp;执行了命令后，对```MainActivity.kt```这个文件所做的一切修改就应该都被撤销了，重新执行```git status```命令检查。  
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/mid/git_checkout.PNG)  
+&emsp;&emsp;可以看到，当前项目没有任何可提交的文件，说明撤销操作确实成功了。  
+&emsp;&emsp;这种撤销方式只设用于那些还没有执行过```add```命令的文件，如果某个文件已经被添加过了，这种方式就无法撤销更改的内容。  
+
+* 撤销使用了```git add```缓存了的代码  
+给```MainActivity```添加一行日志打印，然后输入命令：  
+```git
+gir add .
+```
+&emsp;&emsp;把所有修改的文件都进行添加，输入```git status```检查：  
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/mid/git_reset_1.PNG)  
+&emsp;&emsp;再执行一次```checkout```命令，```MainActivity```仍然处于已填加状态。  
+&emsp;&emsp;  
+&emsp;&emsp;对于已添加的文件，应该先对其取消添加，然后才可以撤回提交。取消添加使用的是```reset```命令。  
+```git
+git reset HEAD app/src/main/java/com/example/multimediatest/MainActivity.kt
+```
+&emsp;&emsp;再运行一次```git status```命令，可以看到```MainActivity.kt```这个文件重新变回了为添加状态，此时就可以执行```checkout```命令将修改的内容撤销了。  
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/mid/git_reset_2.PNG) 
+
+***
+
+## 查看提交记录
+```git
+git log
+```
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/mid/git_log_1.PNG)  
+&emsp;&emsp;每次提交记录都会包含提交```id```、提交人、提交日期以及提交描述这4个信息。  
+&emsp;&emsp;  
+&emsp;&emsp;当提交记录非常多，只想看其中一条记录，可以在命令中指定该纪录的```id```：  
+```git
+git log f2b2f069c41aded5c9f69ee33d53879513782e34
+```
+&emsp;&emsp;也可以在命令中通过指定参数查看最近的几次提交，比如```-1```表示只想看到最后一次的提交记录：  
+```git
+git log -1
+```
