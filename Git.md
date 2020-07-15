@@ -24,3 +24,30 @@ git init
 ![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/Init/git_4.PNG)
 
 如果想删除本地仓库，只需要删除这个目录就行了。
+
+***
+
+## 提交本地代码
+&emsp;&emsp;使用```add```和```commit```命令。  
+&emsp;&emsp;```add```用于把想要提交的代码添加进来，```commit```则是真正执行提交操作。
+
+* 添加单个文件，如添加```build.grade```文件：  
+```git
+git add build.gradle
+```
+
+* 添加某个目录，如添加整个```app```目录下的所有文件：  
+```git
+git add app
+```
+
+* 一次性添加所有文件，只需要在```add```后面加上一个点：  
+```git
+git add .
+```
+
+* ```MaterialDesign```项目下所有文件都添加好后，可以进行提交：  
+```git
+git commit -m "First commit"
+```
+&emsp;&emsp;注意，在```commit```命令的后面，一定要通过```-m```参数加上提交的描述信息，没有描述信息的提交被认为是不合法的。  
