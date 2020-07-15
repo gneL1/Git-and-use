@@ -215,6 +215,55 @@ gir branch -d version1.0
 
 ***
 
-# 测试文本
-一些其他内容人。。。。。。。。。。。。。。。。
-一改又一改
+## 与远程版本库协作
+&emsp;&emsp;使用 **Git** 进行团队开发，需要有一个远程的版本库，团队成员都从这个版本库中获取最原始的代码，然后各自进行开发，并且以后每次提交的代码都同步到远程版本库上。要经常从版本库中获取最新代码，不然容易出现冲突。  
+&emsp;&emsp;比如现在有一个远程版本库的 **Git** 地址是```git@github.com:gneL1/Git-and-use.git```  
+
+* 将代码下载到本地：  
+```git
+git clone git@github.com:gneL1/Git-and-use.git
+```
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/pro/git_clone_1.PNG)  
+```clone```完成后的文件夹：  
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/pro/git_clone_2.PNG)  
+&emsp;&emsp;  
+
+* 把本地修改的内容同步到远程版本库上：  
+```git
+git push origin master
+```
+&emsp;&emsp;```origin```部分指定的是远程版本库的 **Git**地址，```master```部分指定的是同步到哪一个分支上，上述代码完成了将本地代码同步到```git@github.com:gneL1/Git-and-use.git```这个版本库的```master```分支上。  
+&emsp;&emsp;注意，要先```cd```到本地仓库的所在目录，然后将修改的内容```commit```到本地仓库后，```push```命令才会生效。  
+&emsp;&emsp;```push```命令通过对比```commit```的记录，如果本地仓库新增了与远程仓库不同的代码，就把多出来的```commit```给推上去。如果本地仓库的分支的最新版本和远程的```commit```有冲突，就需要解决冲突。  
+
+下面是没有```commit```直接执行```push```命令：  
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/pro/git_push_1.PNG)  
+&emsp;&emsp;```Everything up-to-date```表示本地代码仓库推给远程仓库的文件都是最新的。之前修改的代码都还在工作区，本地代码仓库和远程仓库的代码一样，没东西可以推送。需要先```add```到暂存区，然后```commit```到本地代码仓库，再```push```就会把本地代码仓库的修改代码推送给远程仓库。  
+&emsp;&emsp;  
+先```add```再```commit```最后```push```：  
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/pro/git_push_2.PNG)  
+&emsp;&emsp;可以看到推送是成功的。  
+&emsp;&emsp;  
+* 将远程版本库上的修改同步到本地：  
+```git
+git fetch origin master
+```
+&emsp;&emsp;```fetch```会将远程版本库上的代码同步到本地，不过同步下来的代码并不会合并到任何分支上，而是会存放到一个```origin/master```分支上。  
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/pro/git_fetch_1.PNG)  
+&emsp;&emsp;可以通过```diff```命令查看远程版本库上到底修改了哪些东西。  
+```git
+git diff origin/master
+```
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/pro/git_fetch_2.PNG)  
+
+&emsp;&emsp;再调用```merge```命令将```origin/master```分支上的修改合并到主分支上  
+```git
+git merge origin/master
+```
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/pro/git_fetch_3.PNG)   
+&emsp;&emsp;  
+&emsp;&emsp;而```pull```命令相当于将```fetch```和```merge```两个命令放在一起执行了，它可以从远程版本库上获取最新的代码并且合并到本地。  
+```git
+git pull origin master
+```
+![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/pro/git_pull_1.PNG)  
