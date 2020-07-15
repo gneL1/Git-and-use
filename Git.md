@@ -212,3 +212,7 @@ git merge version1.0
 gir branch -d version1.0
 ```
 ![图片示例](https://github.com/gneL1/AndroidStudy/blob/master/photos/Git/pro/git_delete_1.PNG)
+
+***
+
+# 测试文本
